@@ -1,14 +1,9 @@
-using UUIDs
-
-
 @enum Status New=1 InProgress=2 Succeed=3 Failed=4
 
 Base.@kwdef mutable struct JO{T}
-    # uuid::UUID = UUIDs.uuid4()
     expr::Union{Expr, Nothing} = nothing
-    parents::Dict{Symbol, JO} = Dict()
-    functions::Dict{Symbol, Function} = Dict()
-    # throw_exc::Dict{Symbol, Bool} = Dict()
+    parents::Dict{String, JO} = Dict()
+    functions::Dict{String, Function} = Dict()
     status::Status = New
     result::Union{T, Nothing} = nothing
     error::Union{Exception, Nothing} = nothing
@@ -20,9 +15,9 @@ JO{T}(expr::Expr) where {T} = (expr)
 abstract type EvalEntity end
 
 struct Parent <: EvalEntity
-    key::Symbol
+    key::String
 end
 
 struct Func <: EvalEntity
-    key::Symbol
+    key::String
 end 
